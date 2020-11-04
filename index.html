@@ -1,1 +1,49 @@
-ok
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Angular</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+<!-- CDN SDK -->
+<script src="https://unpkg.com/@pixelpay/sdk"></script>
+<script>
+    PixelPay.setup('2212294583', 'ae2966c0153bd8d53c4b7b2ac4c27efd', 'https://pixel-pay.com');
+
+    //Valores mínimos requeridos de la orden de compra
+    var order = PixelPay.newOrder();
+    order.setOrderID('EJ101');
+    order.setAmount(1.55)
+    order.setFullName('Jonh Doe')
+    order.setEmail('example@gmail.com')
+
+    // Creación del objeto Card
+    var card = PixelPay.newCard();
+    card.setCardNumber("4111125812341234")
+    card.setCvv("123")
+    card.setCardHolder("Fulanito Tal")
+    card.setExpirationDate("06-23")
+    order.addCard(card);
+
+    // Creación del objeto Billing
+    var billing = PixelPay.newBilling();
+    billing.setCity('San Pedro');
+    billing.setState('CR');
+    billing.setCountry('HN');
+    billing.setZip('21102');
+    billing.setAddress('Ave. Circunvalacion');
+    billing.setPhoneNumber('95852921');
+
+    // Generar orden de pago.
+    PixelPay.payOrder(order).then(function(response) {
+        console.log(response);
+    }).catch(function(err) {
+        console.error('Error: ', err);
+    });
+</script>
+</body>
+
+</html>
