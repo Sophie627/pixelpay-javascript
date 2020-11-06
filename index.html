@@ -6,15 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-<!-- CDN SDK -->
 <script src="https://unpkg.com/@pixelpay/sdk"></script>
-<script src="pixelpay.js"></script>
 <script>
+    PixelPay.setup('3753165478', '9078d41cb0713f7e28b174c14eaef324', 'https://cors-anywhere.herokuapp.com/https://ficohsa.pixelpay.app');
 
-    pixelpay('3753165478', '9078d41cb0713f7e28b174c14eaef324', 'https://ficohsa.pixelpay.app', 'EJ101', 1, 'John Doe', 'example@gmail.com', "4111111111111111", "999", "Test Card", "12-20", 'San Pedro', 'CR', 'HN', '21102', 'Ave. Circunvalacion', '95852921');
+    var order = PixelPay.newOrder();
+    order.setOrderID('AC101');
+    order.setAmount(1)
+    order.setFullName('John Doe')
+    order.setEmail('example@gmail.com')
 
+    var card = PixelPay.newCard();
+    card.setCardNumber("4263982640269299")
+    card.setCvv("837")
+    card.setCardHolder("TEST CARD")
+    card.setExpirationDate("02-23")
+    order.addCard(card);
 
+    var billing = PixelPay.newBilling();
+    billing.setCity('San Pedro');
+    billing.setState('CR');
+    billing.setCountry('HN');
+    billing.setZip('21102');
+    billing.setAddress('Ave. Circunvalacion');
+    billing.setPhoneNumber('95852921');
+
+    PixelPay.payOrder(order).then(function(response) {
+        console.log(response);
+    }).catch(function(err) {
+        console.error('Error: ', err);
+    });
 </script>
 </body>
-
 </html>
